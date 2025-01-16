@@ -11,6 +11,7 @@ namespace Assignment.Extensions
             services.AddSingleton<MongoDbContext>();
             services.AddSingleton<MongoDbSeeder>();
             services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(RDBMSRepository<>));
             return services;
         }
     }
