@@ -23,8 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DbContexts\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Model\ResponseDto\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

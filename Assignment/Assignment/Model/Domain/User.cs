@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Assignment.Model
+namespace Assignment.Model.Domain
 {
     public class User
     {

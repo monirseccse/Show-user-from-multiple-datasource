@@ -1,4 +1,4 @@
-﻿using Assignment.Model;
+﻿using Assignment.Model.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

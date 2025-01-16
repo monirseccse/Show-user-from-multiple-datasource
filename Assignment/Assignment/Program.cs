@@ -1,5 +1,6 @@
 using Assignment.ActionFIlters;
 using Assignment.Extensions;
+using Assignment.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -24,5 +25,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<MongoDbSeeder>();
+    await seeder.SeedAsync();
+}
 
 app.Run();

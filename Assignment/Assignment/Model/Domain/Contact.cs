@@ -1,4 +1,4 @@
-﻿namespace Assignment.Model
+﻿namespace Assignment.Model.Domain
 {
     public class Contact
     {
