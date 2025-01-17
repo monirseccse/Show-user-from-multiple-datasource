@@ -7,5 +7,6 @@ namespace Assignment.Model.RequestDto
     {
         [FromQuery(Name = "phoneNo")]
         public string? PhoneNo { get; set; }
+        public int Id { get; set; }
     }
 }

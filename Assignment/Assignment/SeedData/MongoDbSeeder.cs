@@ -17,8 +17,7 @@ namespace Assignment.SeedData
         public async Task SeedAsync()
         {
             var _usersCollection = _context.GetCollection<User>("Users");
-
-            // Check if collection already has data
+            var data = await _usersCollection.Find(Builders<User>.Filter.Eq("Id", 1)).FirstOrDefaultAsync();
             if (await _usersCollection.CountDocumentsAsync(Builders<User>.Filter.Empty) > 0)
             {
                 Console.WriteLine("Data already seeded. Skipping seeding process.");

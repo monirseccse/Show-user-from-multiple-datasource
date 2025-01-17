@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Assignment.Repositories
 {
-    public class JsonRepository<T> : IRepository<T> where T : BaseEntity
+    public class JsonRepository<T> where T : BaseEntity// : IRepository<T> 
     {
         private readonly string _filePath = ".json";
 
@@ -48,6 +48,11 @@ namespace Assignment.Repositories
             entityList.RemoveAll(u => u.Id == id);
             await File.WriteAllTextAsync(_filePath, JsonSerializer.Serialize(entityList));
 
+        }
+
+        public Task<long> CountAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

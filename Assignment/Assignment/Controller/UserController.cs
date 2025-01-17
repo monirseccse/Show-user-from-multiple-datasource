@@ -1,5 +1,7 @@
 ﻿using Assignment.Model.Domain;
 using Assignment.Model.RequestDto;
+using Assignment.Repositories;
+using Assignment.Repositories.NoSqlRepository;
 using Assignment.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +13,6 @@ namespace Assignment.Controller
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -19,7 +20,7 @@ namespace Assignment.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery] UserListDto model)
-        {
+        { 
             var res = await _userService.GetAllAsync(model);
             return Ok(res);
         }
@@ -28,7 +29,8 @@ namespace Assignment.Controller
         public async Task<IActionResult> GetUser(int id)
         {
             var res = await _userService.GetByIdAsync(id);
-            return StatusCode((int)res.StatusCode, res);
+            return Ok(res);
+           // return StatusCode((int)res.StatusCode, res);
         }
 
         [HttpPost]

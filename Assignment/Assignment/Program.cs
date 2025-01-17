@@ -1,6 +1,7 @@
 using Assignment.ActionFIlters;
 using Assignment.DbContexts;
 using Assignment.Extensions;
+using Assignment.Profiles;
 using Assignment.SeedData;
 using Assignment.Utility;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,11 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new ValidationFilterAttribute());
-});
+}); 
+builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddSingleton<IMongoClient>(sp =>
 {
-    var connectionString = configuration.GetConnectionString("MongoConnection"); // Update to your MongoDB connection string
+    var connectionString = configuration.GetConnectionString("MongoConnection");
     return new MongoClient(connectionString);
 });
 builder.Services.AddScoped<IMongoDatabase>(sp =>
@@ -32,6 +34,7 @@ builder.Services.AddDbContext<RDBMSDbContext>(options =>
       options.UseSqlServer(connectionStringRDBMS, m => m.MigrationsAssembly(assemblyName)));
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
