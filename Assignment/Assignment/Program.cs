@@ -28,6 +28,7 @@ builder.Services.AddScoped<IMongoDatabase>(sp =>
     var databaseName = "UserDb"; 
     return client.GetDatabase(databaseName);
 }); 
+builder.Services.AddScoped<MongoDbSequenceService>();
 var connectionStringRDBMS = builder.Configuration.GetConnectionString("SqlServerConnection");
 var assemblyName = Assembly.GetExecutingAssembly().FullName;
 builder.Services.AddDbContext<RDBMSDbContext>(options =>

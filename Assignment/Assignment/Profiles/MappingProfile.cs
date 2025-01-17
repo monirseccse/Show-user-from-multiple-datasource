@@ -13,6 +13,7 @@ namespace Assignment.Profiles
             CreateMap<User, UserOutDto>().ReverseMap();
             CreateMap<UserInDto, User>().ReverseMap();
             CreateMap<ContactInDto, Contact>().ReverseMap();
+            CreateMap<RoleInDto, Role>().ReverseMap();
         }
     }
 }

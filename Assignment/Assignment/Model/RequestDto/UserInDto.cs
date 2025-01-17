@@ -7,7 +7,7 @@
         public bool Active { get; set; }
         public string? Company { get; set; }
         public string Sex { get; set; } = null!;
-        public int RoleId { get; set; }
+        public RoleInDto Role { get; set; }
         public ContactInDto Contact { get; set; }
     }
 }

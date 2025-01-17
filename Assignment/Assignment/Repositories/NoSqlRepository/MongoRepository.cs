@@ -1,6 +1,7 @@
 ﻿using Assignment.DbContexts;
 using Assignment.Model.Domain;
 using Assignment.Model.RequestDto;
+using Assignment.Utility;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System.Linq.Expressions;
@@ -10,9 +11,12 @@ namespace Assignment.Repositories.NoSqlRepository
     public class MongoRepository :IRepository
     {
         private readonly IMongoCollection<User> _collection;
-        public MongoRepository(MongoDbContext context)
+        private readonly MongoDbSequenceService _sequenceService;
+        public MongoRepository(MongoDbContext context, MongoDbSequenceService sequenceService)
         {
-            _collection = context.GetCollection<User>("Users");  }
+            _collection = context.GetCollection<User>("Users");
+            _sequenceService = sequenceService;
+        }
         public async Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>> filter = null, int skip = 0,int take =10)
         {
             if (filter == null)
@@ -28,7 +32,16 @@ namespace Assignment.Repositories.NoSqlRepository
             return data;
         }
 
-        public async Task AddAsync(User entity) => await _collection.InsertOneAsync(entity);
+        public async Task AddAsync(User entity)
+        {
+            var nextId = await _sequenceService.GetNextSequenceValueAsync("Id");
+            entity.Id = nextId;
+            nextId = await _sequenceService.GetNextSequenceValueAsync("Id");
+            entity.Contact.Id = nextId;
+            if(entity.Role.Id == 0)
+                entity.Role.Id = nextId;
+            await _collection.InsertOneAsync(entity);
+        }
 
         public async Task UpdateAsync(User entity)
         {
