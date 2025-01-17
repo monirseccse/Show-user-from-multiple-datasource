@@ -11,7 +11,10 @@
 
         public enum CommonMessage
         {
-            ValidationFailed
+            ValidationFailed,
+            SavedSuccessfully,
+            UpdatedSuccessfully,
+            DeletedSuccessfully
         }
     }
 }

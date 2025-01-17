@@ -11,6 +11,18 @@ namespace Assignment.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Contact)
+                .WithOne()
+                .HasForeignKey<User>(u => u.ContactId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
+                .WithMany() 
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Seed data for Contacts
             modelBuilder.Entity<Contact>().HasData(
                 new Contact { Id = 1, Phone = "+41023658", Address = "Banani", City = "Dhaka", Country = "Bangladesh" },

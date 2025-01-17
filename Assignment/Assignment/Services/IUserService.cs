@@ -8,8 +8,8 @@ namespace Assignment.Services
     {
         Task<PaginatedResponseModel<UserListOutDto>> GetAllAsync(UserListDto model);
         Task<ResponseModel> GetByIdAsync(int id);
-        Task<ResponseModel> AddAsync(User model);
-        Task<ResponseModel> UpdateAsync(int id, User model);
+        Task<ResponseModel> AddAsync(UserInDto model);
+        Task<ResponseModel> UpdateAsync(int id, UserInDto model);
         Task<ResponseModel> DeleteAsync(int id);
     }
 }

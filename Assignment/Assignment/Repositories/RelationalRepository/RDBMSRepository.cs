@@ -32,13 +32,13 @@ namespace Assignment.Repositories.RelationalRepository
             {
                 query = query.Take(take);
             }
-            return await _dbSet.AsNoTracking().ToListAsync();
+            return await query.AsNoTracking().ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int id, params Expression<Func<User, object>>[] includeProperties)
         {
             IQueryable<User> query = _context.Set<User>();
-            query.Where(x => x.Id == id);
+            query = query.Where(x => x.Id == id);
             if (includeProperties != null)
                 query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 

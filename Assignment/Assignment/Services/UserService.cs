@@ -8,6 +8,7 @@ using Assignment.Utility;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using static Assignment.Constants.AppConstants;
 
 namespace Assignment.Services
 {
@@ -24,14 +25,36 @@ namespace Assignment.Services
             _mongoRepository = mongoRepository;
         }
 
-        public async Task<ResponseModel> AddAsync(User model)
+        public async Task<ResponseModel> AddAsync(UserInDto model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var repository = _repositoryFactory.GetRepository();
+                var entity = _mapper.Map<User>(model);
+                await repository.AddAsync(entity);
+                return Utilities.GetSuccessMsg(CommonMessage.SavedSuccessfully.ToString());
+            }
+            catch (Exception ex)
+            {
+                return Utilities.GetErrorMsg(ex.Message);
+            }
         }
 
-        public Task<ResponseModel> DeleteAsync(int id)
+        public async Task<ResponseModel> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var repository = _repositoryFactory.GetRepository();
+                var user = await repository.GetByIdAsync(id, x => x.Contact);
+                if (user is null)
+                    return Utilities.GetNoDataFoundMsg("User not found");
+                await repository.DeleteAsync(id);
+                return Utilities.GetSuccessMsg(CommonMessage.DeletedSuccessfully.ToString());
+            }
+            catch (Exception ex)
+            {
+                return Utilities.GetErrorMsg(ex.Message);
+            }
         }
 
         public async Task<PaginatedResponseModel<UserListOutDto>> GetAllAsync(UserListDto model)
@@ -79,9 +102,23 @@ namespace Assignment.Services
             }
         }
 
-        public Task<ResponseModel> UpdateAsync(int id, User model)
+        public async Task<ResponseModel> UpdateAsync(int id, UserInDto model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var repository = _repositoryFactory.GetRepository();
+                var user = await repository.GetByIdAsync(id, x => x.Contact);
+                if (user is null)
+                    return Utilities.GetNoDataFoundMsg("User not found");
+                var entity =_mapper.Map(model,user);
+                await repository.UpdateAsync(entity);
+                return Utilities.GetSuccessMsg(CommonMessage.UpdatedSuccessfully.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                return Utilities.GetErrorMsg(ex.Message);
+            }   
         }
     }
 }

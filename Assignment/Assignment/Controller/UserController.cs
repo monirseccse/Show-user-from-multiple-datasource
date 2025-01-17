@@ -34,14 +34,14 @@ namespace Assignment.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(User user)
+        public async Task<IActionResult> AddUser([FromBody]UserInDto user)
         {
             var res = await _userService.AddAsync(user);
             return StatusCode((int)res.StatusCode, res);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, User user)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserInDto user)
         {
             var res = await _userService.UpdateAsync(id, user);
             return StatusCode((int)res.StatusCode, res);
