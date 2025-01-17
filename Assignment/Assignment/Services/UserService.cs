@@ -1,48 +1,49 @@
 ﻿using Assignment.Model.Domain;
+using Assignment.Model.RequestDto;
+using Assignment.Model.ResponseDto;
 using Assignment.Repositories;
+using Assignment.Repositories.RelationalRepository;
+using Assignment.Utility;
 
 namespace Assignment.Services
 {
     public class UserService : IUserService
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly RepositoryFactory<User> _repositoryFactory;
 
-        public UserService(IServiceProvider serviceProvider)
+        public UserService(RepositoryFactory<User> repositoryFactory)
         {
-            _serviceProvider = serviceProvider;
+            _repositoryFactory = repositoryFactory;
         }
 
-        public Task AddAsync(User model)
+        public async Task<ResponseModel> AddAsync(User model)
         {
             throw new NotImplementedException();
         }
 
-        public IRepository<User> GetRepository(string dataSource)
+        public Task<ResponseModel> DeleteAsync(int id)
         {
-            return dataSource.ToLower() switch
+            throw new NotImplementedException();
+        }
+
+        public Task<PaginatedResponseModel<User>> GetAllAsync(UserListDto model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseModel> GetByIdAsync(int id)
+        {
+            try
             {
-                "sql" => _serviceProvider.GetRequiredService<RDBMSRepository<User>>(),
-                "mongo" => _serviceProvider.GetRequiredService<MongoRepository<User>>(),
-                _ => throw new NotSupportedException("Invalid data source")
-            };
-         }
-
-        public Task DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
+                return Utilities.GetSuccessMsg("");
+            }
+            catch (Exception ex)
+            {
+                return Utilities.GetErrorMsg(ex.Message);
+            }
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(int id, User model)
+        public Task<ResponseModel> UpdateAsync(int id, User model)
         {
             throw new NotImplementedException();
         }

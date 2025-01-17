@@ -1,6 +1,8 @@
 ﻿using Assignment.DbContexts;
 using Assignment.Repositories;
+using Assignment.Repositories.RelationalRepository;
 using Assignment.SeedData;
+using Assignment.Services;
 
 namespace Assignment.Extensions
 {
@@ -10,8 +12,11 @@ namespace Assignment.Extensions
         {
             services.AddSingleton<MongoDbContext>();
             services.AddSingleton<MongoDbSeeder>();
-            services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(RDBMSRepository<>));
+            services.AddScoped(typeof(RDBMSRepository<>));
+            services.AddScoped(typeof(MongoRepository<>));
+            services.AddScoped(typeof(JsonRepository<>));
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped(typeof(RepositoryFactory<>));
             return services;
         }
     }

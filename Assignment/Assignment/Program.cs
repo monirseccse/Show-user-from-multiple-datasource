@@ -2,7 +2,9 @@ using Assignment.ActionFIlters;
 using Assignment.DbContexts;
 using Assignment.Extensions;
 using Assignment.SeedData;
+using Assignment.Utility;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
 using System.Reflection;
@@ -29,8 +31,14 @@ var assemblyName = Assembly.GetExecutingAssembly().FullName;
 builder.Services.AddDbContext<RDBMSDbContext>(options =>
       options.UseSqlServer(connectionStringRDBMS, m => m.MigrationsAssembly(assemblyName)));
 builder.Services.AddServices();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Showing data from multiple datasource API", Version = "v1" });
+    options.OperationFilter<AddDatasourceHeaderParameter>();
+}
+ );
 
 var app = builder.Build();
 
@@ -42,6 +50,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
 
 
 using (var scope = app.Services.CreateScope())

@@ -8,5 +8,10 @@
             Error,
             Canceled
         }
+
+        public enum CommonMessage
+        {
+            ValidationFailed
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assignment.Model.Domain;
+using Assignment.Model.RequestDto;
 using Assignment.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,38 +18,38 @@ namespace Assignment.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery] UserListDto model)
         {
-            var user = await _userService.GetAllAsync();
-            return Ok(user);
+            var res = await _userService.GetAllAsync(model);
+            return Ok(res);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
-            return Ok();
+            var res = await _userService.GetByIdAsync(id);
+            return StatusCode((int)res.StatusCode, res);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddUser(User user)
         {
-            await _userService.AddAsync(user);
-            return BadRequest("Only JSON data source supports adding users.");
+            var res = await _userService.AddAsync(user);
+            return StatusCode((int)res.StatusCode, res);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, User user)
         {
-            await _userService.UpdateAsync(id, user);
-            return BadRequest("Only JSON data source supports updating users.");
+            var res = await _userService.UpdateAsync(id, user);
+            return StatusCode((int)res.StatusCode, res);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteAsync(id);
-            return BadRequest("Only JSON data source supports deleting users.");
+            var res = await _userService.DeleteAsync(id);
+            return StatusCode((int)res.StatusCode, res);
         }
     }
 }

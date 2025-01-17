@@ -1,8 +1,7 @@
-﻿
-using Assignment.DbContexts;
+﻿using Assignment.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Assignment.Repositories
+namespace Assignment.Repositories.RelationalRepository
 {
     public class RDBMSRepository<T> : IRepository<T> where T : class
     {

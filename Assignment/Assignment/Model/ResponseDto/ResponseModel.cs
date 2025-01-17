@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Assignment.Utilities
+namespace Assignment.Model.ResponseDto
 {
     public class ResponseModel
     {

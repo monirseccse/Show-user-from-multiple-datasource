@@ -1,13 +1,15 @@
 ﻿using Assignment.Model.Domain;
+using Assignment.Model.RequestDto;
+using Assignment.Model.ResponseDto;
 
 namespace Assignment.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAllAsync();
-        Task<User> GetByIdAsync(int id);
-        Task AddAsync(User model);
-        Task UpdateAsync(int id, User model);
-        Task DeleteAsync(int id);
+        Task<PaginatedResponseModel<User>> GetAllAsync(UserListDto model);
+        Task<ResponseModel> GetByIdAsync(int id);
+        Task<ResponseModel> AddAsync(User model);
+        Task<ResponseModel> UpdateAsync(int id, User model);
+        Task<ResponseModel> DeleteAsync(int id);
     }
 }
