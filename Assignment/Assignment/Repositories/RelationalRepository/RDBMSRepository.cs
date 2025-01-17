@@ -35,7 +35,15 @@ namespace Assignment.Repositories.RelationalRepository
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id) => await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<User> GetByIdAsync(int id, params Expression<Func<User, object>>[] includeProperties)
+        {
+            IQueryable<User> query = _context.Set<User>();
+            query.Where(x => x.Id == id);
+            if (includeProperties != null)
+                query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+
+           return await query.AsNoTracking().FirstOrDefaultAsync();
+        }
 
         public async Task AddAsync(User entity)
         {

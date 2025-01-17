@@ -8,8 +8,9 @@ namespace Assignment.Profiles
     {
         public MappingProfile()
         {
+            CreateMap<User, UserListOutDto>().ReverseMap();
             CreateMap<User, UserOutDto>().ReverseMap();
-            
         }
     }
 }
+

@@ -5,8 +5,7 @@ namespace Assignment.Model.RequestDto
 {
     public class UserListDto : PaginationBase
     {
-        [FromQuery(Name = "phoneNo")]
-        public string? PhoneNo { get; set; }
-        public int Id { get; set; }
+        [FromQuery(Name = "lastName")]
+        public string? LastName { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Assignment.Repositories.NoSqlRepository
            return await _collection.Find(filter).Skip(skip).Limit(take).ToListAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id, params Expression<Func<User, object>>[] includeProperties)
         {
             var data = await _collection.Find(Builders<User>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
             return data;

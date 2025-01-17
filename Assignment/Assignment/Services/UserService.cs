@@ -34,15 +34,22 @@ namespace Assignment.Services
             throw new NotImplementedException();
         }
 
-        public async Task<PaginatedResponseModel<UserOutDto>> GetAllAsync(UserListDto model)
+        public async Task<PaginatedResponseModel<UserListOutDto>> GetAllAsync(UserListDto model)
         {
             try
             {
                 var repository = _repositoryFactory.GetRepository();
-                var paginatedResponse = new PaginatedResponseModel<UserOutDto>();
-                var findall = await repository.GetAllAsync(null,
+                var paginatedResponse = new PaginatedResponseModel<UserListOutDto>();
+                Expression<Func<User, bool>> filters = null;
+
+                if (!string.IsNullOrWhiteSpace(model.LastName))
+                {
+                    filters = user => user.LastName.Contains(model.LastName);
+                }
+
+                var findall = await repository.GetAllAsync(filters,
                     (model.PageNumber-1)*model.ItemsPerPage,model.ItemsPerPage);
-                paginatedResponse.Items = _mapper.Map<List<UserOutDto>>(findall);
+                paginatedResponse.Items = _mapper.Map<List<UserListOutDto>>(findall);
                 paginatedResponse.TotalItems = 5;
                 paginatedResponse.TotalPages =(int)Math.Ceiling((double)paginatedResponse.TotalItems / model.ItemsPerPage);
                 paginatedResponse.PageNumber = model.PageNumber;
@@ -51,7 +58,7 @@ namespace Assignment.Services
             }
             catch (Exception ex)
             {
-                return new PaginatedResponseModel<UserOutDto>();
+                return new PaginatedResponseModel<UserListOutDto>();
             }
         }
 
@@ -60,11 +67,11 @@ namespace Assignment.Services
             try
             {
                 var repository = _repositoryFactory.GetRepository();
-                var user = await repository.GetByIdAsync(id);
+                var user = await repository.GetByIdAsync(id, x=> x.Contact, x => x.Role);
                 if (user is null)
                     return Utilities.GetNoDataFoundMsg("User not found");
-
-                return Utilities.GetSuccessMsg("",user);
+                var userOutDto = _mapper.Map<UserOutDto>(user);
+                return Utilities.GetSuccessMsg("", userOutDto);
             }
             catch (Exception ex)
             {
