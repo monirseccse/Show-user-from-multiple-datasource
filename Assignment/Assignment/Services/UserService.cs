@@ -2,11 +2,8 @@
 using Assignment.Model.RequestDto;
 using Assignment.Model.ResponseDto;
 using Assignment.Repositories.Factory;
-using Assignment.Repositories.NoSqlRepository;
-using Assignment.Repositories.RelationalRepository;
 using Assignment.Utility;
 using AutoMapper;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using static Assignment.Constants.AppConstants;
 
@@ -69,10 +66,10 @@ namespace Assignment.Services
                 }
 
                 var findall = await repository.GetAllAsync(filters,
-                    (model.PageNumber-1)*model.ItemsPerPage,model.ItemsPerPage);
+                    (model.PageNumber - 1) * model.ItemsPerPage, model.ItemsPerPage);
                 paginatedResponse.Items = _mapper.Map<List<UserListOutDto>>(findall);
                 paginatedResponse.TotalItems = await repository.CountAsync(filters);
-                paginatedResponse.TotalPages =(int)Math.Ceiling((double)paginatedResponse.TotalItems / model.ItemsPerPage);
+                paginatedResponse.TotalPages = (int)Math.Ceiling((double)paginatedResponse.TotalItems / model.ItemsPerPage);
                 paginatedResponse.PageNumber = model.PageNumber;
                 paginatedResponse.ItemsPerPage = model.ItemsPerPage;
                 return paginatedResponse;
@@ -88,7 +85,7 @@ namespace Assignment.Services
             try
             {
                 var repository = _repositoryFactory.GetRepository();
-                var user = await repository.GetByIdAsync(id, x=> x.Contact, x => x.Role);
+                var user = await repository.GetByIdAsync(id, x => x.Contact, x => x.Role);
                 if (user is null)
                     return Utilities.GetNoDataFoundMsg("User not found");
                 var userOutDto = _mapper.Map<UserOutDto>(user);
@@ -108,7 +105,7 @@ namespace Assignment.Services
                 var user = await repository.GetByIdAsync(id, x => x.Contact);
                 if (user is null)
                     return Utilities.GetNoDataFoundMsg("User not found");
-                var entity =_mapper.Map(model,user);
+                var entity = _mapper.Map(model, user);
                 await repository.UpdateAsync(entity);
                 return Utilities.GetSuccessMsg(CommonMessage.UpdatedSuccessfully.ToString());
 
@@ -116,7 +113,7 @@ namespace Assignment.Services
             catch (Exception ex)
             {
                 return Utilities.GetErrorMsg(ex.Message);
-            }   
+            }
         }
     }
 }

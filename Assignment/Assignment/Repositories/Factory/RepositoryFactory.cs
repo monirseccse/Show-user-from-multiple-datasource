@@ -1,5 +1,4 @@
-﻿using Assignment.Model.Domain;
-using Assignment.Repositories.NoSqlRepository;
+﻿using Assignment.Repositories.NoSqlRepository;
 using Assignment.Repositories.RelationalRepository;
 
 namespace Assignment.Repositories.Factory

@@ -33,6 +33,12 @@ var connectionStringRDBMS = builder.Configuration.GetConnectionString("SqlServer
 var assemblyName = Assembly.GetExecutingAssembly().FullName;
 builder.Services.AddDbContext<RDBMSDbContext>(options =>
       options.UseSqlServer(connectionStringRDBMS, m => m.MigrationsAssembly(assemblyName)));
+builder.Services.AddCors(p => p.AddDefaultPolicy(builder =>
+{
+    builder.AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader();
+}));
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
@@ -55,6 +61,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 
