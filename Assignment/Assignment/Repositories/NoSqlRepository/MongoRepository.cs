@@ -36,10 +36,7 @@ namespace Assignment.Repositories.NoSqlRepository
         {
             var nextId = await _sequenceService.GetNextSequenceValueAsync("Id");
             entity.Id = nextId;
-            nextId = await _sequenceService.GetNextSequenceValueAsync("Id");
             entity.Contact.Id = nextId;
-            if(entity.Role.Id == 0)
-                entity.Role.Id = nextId;
             await _collection.InsertOneAsync(entity);
         }
 

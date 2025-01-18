@@ -105,7 +105,7 @@ namespace Assignment.Services
             try
             {
                 var repository = _repositoryFactory.GetRepository();
-                var user = await repository.GetByIdAsync(id, x => x.Contact, x=> x.Role);
+                var user = await repository.GetByIdAsync(id, x => x.Contact);
                 if (user is null)
                     return Utilities.GetNoDataFoundMsg("User not found");
                 var entity =_mapper.Map(model,user);
