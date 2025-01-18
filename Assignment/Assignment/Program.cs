@@ -12,6 +12,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
+string mongoDatabaseName = configuration.GetValue<string>("Database:MongoDatabaseName");
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new ValidationFilterAttribute());
@@ -25,8 +26,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 builder.Services.AddScoped<IMongoDatabase>(sp =>
 {
     var client = sp.GetRequiredService<IMongoClient>();
-    var databaseName = "UserDb"; 
-    return client.GetDatabase(databaseName);
+    return client.GetDatabase(mongoDatabaseName);
 }); 
 builder.Services.AddScoped<MongoDbSequenceService>();
 var connectionStringRDBMS = builder.Configuration.GetConnectionString("SqlServerConnection");
