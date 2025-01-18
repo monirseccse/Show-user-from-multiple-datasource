@@ -47,6 +47,7 @@ namespace Assignment.Repositories.RelationalRepository
 
         public async Task AddAsync(User entity)
         {
+            entity.Role = null;
             _dbSet.Add(entity);
             await _context.SaveChangesAsync();
         }

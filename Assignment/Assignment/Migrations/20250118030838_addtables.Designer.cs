@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment.Migrations
 {
     [DbContext(typeof(RDBMSDbContext))]
-    [Migration("20250117111348_addSeedData")]
-    partial class addSeedData
+    [Migration("20250118030838_addtables")]
+    partial class addtables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,10 +98,7 @@ namespace Assignment.Migrations
             modelBuilder.Entity("Assignment.Model.Domain.Role", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -173,7 +170,9 @@ namespace Assignment.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactId");
+                    b.HasIndex("ContactId")
+                        .IsUnique()
+                        .HasFilter("[ContactId] IS NOT NULL");
 
                     b.HasIndex("RoleId");
 
@@ -240,12 +239,14 @@ namespace Assignment.Migrations
             modelBuilder.Entity("Assignment.Model.Domain.User", b =>
                 {
                     b.HasOne("Assignment.Model.Domain.Contact", "Contact")
-                        .WithMany()
-                        .HasForeignKey("ContactId");
+                        .WithOne()
+                        .HasForeignKey("Assignment.Model.Domain.User", "ContactId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Assignment.Model.Domain.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Contact");
 

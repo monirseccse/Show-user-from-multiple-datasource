@@ -71,7 +71,7 @@ namespace Assignment.Services
                 var findall = await repository.GetAllAsync(filters,
                     (model.PageNumber-1)*model.ItemsPerPage,model.ItemsPerPage);
                 paginatedResponse.Items = _mapper.Map<List<UserListOutDto>>(findall);
-                paginatedResponse.TotalItems = 5;
+                paginatedResponse.TotalItems = await repository.CountAsync(filters);
                 paginatedResponse.TotalPages =(int)Math.Ceiling((double)paginatedResponse.TotalItems / model.ItemsPerPage);
                 paginatedResponse.PageNumber = model.PageNumber;
                 paginatedResponse.ItemsPerPage = model.ItemsPerPage;
@@ -105,7 +105,7 @@ namespace Assignment.Services
             try
             {
                 var repository = _repositoryFactory.GetRepository();
-                var user = await repository.GetByIdAsync(id, x => x.Contact, x=> x.Role);
+                var user = await repository.GetByIdAsync(id, x => x.Contact);
                 if (user is null)
                     return Utilities.GetNoDataFoundMsg("User not found");
                 var entity =_mapper.Map(model,user);
