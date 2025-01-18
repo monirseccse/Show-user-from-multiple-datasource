@@ -1,8 +1,7 @@
-﻿namespace Assignment.Model
+﻿namespace Assignment.Model.Domain
 {
-    public class Contact
+    public class Contact : BaseEntity
     {
-        public int Id { get; set; }
         public string Phone { get; set; } = null!;
         public string? Address { get; set; }
         public string City { get; set; } = null!;

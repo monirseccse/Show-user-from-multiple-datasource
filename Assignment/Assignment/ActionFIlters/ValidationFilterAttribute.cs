@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Assignment.Model.ResponseDto;
 using Microsoft.AspNetCore.Mvc;
-using Assignment.Utilities;
-using static Assignment.Constants.AppConstants;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
+using static Assignment.Constants.AppConstants;
 
 namespace Assignment.ActionFIlters
 {
