@@ -12,6 +12,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
+string mongoDatabaseName = configuration.GetValue<string>("Database:MongoDatabaseName");
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new ValidationFilterAttribute());
@@ -25,14 +26,19 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 builder.Services.AddScoped<IMongoDatabase>(sp =>
 {
     var client = sp.GetRequiredService<IMongoClient>();
-    var databaseName = "UserDb"; 
-    return client.GetDatabase(databaseName);
+    return client.GetDatabase(mongoDatabaseName);
 }); 
 builder.Services.AddScoped<MongoDbSequenceService>();
 var connectionStringRDBMS = builder.Configuration.GetConnectionString("SqlServerConnection");
 var assemblyName = Assembly.GetExecutingAssembly().FullName;
 builder.Services.AddDbContext<RDBMSDbContext>(options =>
       options.UseSqlServer(connectionStringRDBMS, m => m.MigrationsAssembly(assemblyName)));
+builder.Services.AddCors(p => p.AddDefaultPolicy(builder =>
+{
+    builder.AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader();
+}));
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
@@ -55,6 +61,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 

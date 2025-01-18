@@ -29,8 +29,7 @@ namespace Assignment.Controller
         public async Task<IActionResult> GetUser(int id)
         {
             var res = await _userService.GetByIdAsync(id);
-            return Ok(res);
-           // return StatusCode((int)res.StatusCode, res);
+            return StatusCode((int)res.StatusCode, res);
         }
 
         [HttpPost]
