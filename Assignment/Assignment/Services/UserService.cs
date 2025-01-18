@@ -71,7 +71,7 @@ namespace Assignment.Services
                 var findall = await repository.GetAllAsync(filters,
                     (model.PageNumber-1)*model.ItemsPerPage,model.ItemsPerPage);
                 paginatedResponse.Items = _mapper.Map<List<UserListOutDto>>(findall);
-                paginatedResponse.TotalItems = 5;
+                paginatedResponse.TotalItems = await repository.CountAsync(filters);
                 paginatedResponse.TotalPages =(int)Math.Ceiling((double)paginatedResponse.TotalItems / model.ItemsPerPage);
                 paginatedResponse.PageNumber = model.PageNumber;
                 paginatedResponse.ItemsPerPage = model.ItemsPerPage;
