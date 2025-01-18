@@ -1,6 +1,7 @@
 ﻿using Assignment.DbContexts;
 using Assignment.Profiles;
 using Assignment.Repositories;
+using Assignment.Repositories.Factory;
 using Assignment.Repositories.NoSqlRepository;
 using Assignment.Repositories.RelationalRepository;
 using Assignment.SeedData;
@@ -16,9 +17,12 @@ namespace Assignment.Extensions
             services.AddSingleton<MongoDbSeeder>();
             services.AddScoped<RDBMSRepository>();
             services.AddScoped(typeof(MongoRepository));
-            services.AddScoped(typeof(JsonRepository<>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped(typeof(RepositoryFactory));
+            services.AddScoped<RDBMSRoleRepository>();
+            services.AddScoped(typeof(MongoRoleRepository));
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped(typeof(RoleRepositoryFactory));
             return services;
         }
     }

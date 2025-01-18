@@ -1,7 +1,7 @@
 ﻿using Assignment.Model.Domain;
 using Assignment.Model.RequestDto;
 using Assignment.Model.ResponseDto;
-using Assignment.Repositories;
+using Assignment.Repositories.Factory;
 using Assignment.Repositories.NoSqlRepository;
 using Assignment.Repositories.RelationalRepository;
 using Assignment.Utility;
@@ -15,14 +15,12 @@ namespace Assignment.Services
     public class UserService : IUserService
     {
         private readonly RepositoryFactory _repositoryFactory;
-        private readonly MongoRepository _mongoRepository;
         private readonly IMapper _mapper;
 
-        public UserService(RepositoryFactory repositoryFactory, IMapper mapper, MongoRepository mongoRepository)
+        public UserService(RepositoryFactory repositoryFactory, IMapper mapper)
         {
             _repositoryFactory = repositoryFactory;
             _mapper = mapper;
-            _mongoRepository = mongoRepository;
         }
 
         public async Task<ResponseModel> AddAsync(UserInDto model)
