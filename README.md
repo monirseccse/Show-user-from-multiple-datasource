@@ -14,16 +14,12 @@ This project is built using .NET 8 and supports SQL Server and MongoDB as its da
 3. MongoDB is installed and running.
 ## Installation
 
-Firstly, clone the project-
+1. clone the project-
 
 ```bash
-  https://github.com/monirseccse/Assignment.git
+  https://github.com/monirseccse/Show-user-from-multiple-datasource.git
 ```
-secondly Open the project in Visual Studio by running the Assignment.sln solution file -
-```bash
-cd Assignment\Assignment
-```
-upate connectionstring from appsetting.json file
+2. upate connectionstring from appsetting.json file
 ```bash
 "Database":
  {
@@ -33,7 +29,7 @@ upate connectionstring from appsetting.json file
  "Server=#;Database=#;Trusted_Connection=True;", 
 "MongoDb": "mongodb://localhost:27017/MyAppDb" }
  ```
-You may manually run the Update Database using the following command in the Project Manager Console in Visual Studio.
+3.update database 
 ```bash
 update-database -context RDBMSDbContext
  ```
@@ -55,4 +51,6 @@ Based on datasource like Sql or NoSql selection following operation will done on
 - Update user
 - Delete user
 - View user
+- search
+- paginated user list
 
