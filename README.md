@@ -91,9 +91,3 @@ Connection Errors: Verify the connection strings in appsettings.json.
 Migration Errors: Ensure the Microsoft.EntityFrameworkCore.Tools package is installed and use the correct -context parameter.
 
 MongoDB Not Found: Verify that MongoDB is running and accessible at the specified connection string.
-
-License
-
-This project is licensed under the MIT License.
-
-so, i have t# Assignment
