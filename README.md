@@ -5,7 +5,7 @@ Show user data from various data sources in a single page application.
 
 
 ## Overview
-This project is built using .NET 8 and supports SQL Server and MongoDB as its data sources. Users can select their preferred database type (SQL or NoSQL) from the frontend. Based on the selection, the project dynamically changes the connection string what we set in appsetting.json and executes database-specific logic. The application uses Entity Framework Core for SQL Server with migrations, and MongoDB for NoSQL operations.
+This project is built using .NET 8 and supports SQL Server and MongoDB as its data sources. Users can select their preferred database type (SQL or NoSQL) from the frontend. Based on the selection, the project dynamically changes the connection string what we set in appsetting.json and executes database-specific logic. The application uses Entity Framework Core for SQL Server with migrations and MongoDB for NoSQL operations.Here frontend portion contains react codebase and backend portion contains c# codebase.
 ## Prerequisites
 1. .NET 8 SDK is installed on your system.
 
